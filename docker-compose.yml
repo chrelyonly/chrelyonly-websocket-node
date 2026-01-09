@@ -1,0 +1,31 @@
+services:
+  chrelyonly-websocket-node-server:
+    mem_limit: 512m
+    image: docker.1ms.run/node:20
+    container_name: chrelyonly-websocket-node-server
+    volumes:
+      - /www/dk_project/dk_app/chrelyonly-websocket-node-server/app:/app
+    dns:
+      - 114.114.114.114
+      - 8.8.8.8
+    working_dir: /app
+    networks:
+      - my-network
+
+    # 运行应用
+    # command: npm run prod
+    command: sh -c "echo '任务完成'; tail -f /dev/null"
+
+
+networks:
+  my-network:  # 定义自定义网络
+    name: my-network         # 可选：自定义网络名称
+    driver: bridge  # 使用默认的 bridge 网络驱动
+    ipam: # IP 地址管理配置（IP Address Management）
+      driver: default           # 使用默认 IPAM 驱动
+      config: # 子网配置（可多个）
+        - subnet: 172.20.0.0/16     # 子网网段 172.20.0.1 -- 172.20.255.254
+          gateway: 172.20.0.1       # 默认网关
+          aux_addresses: # 预留 IP 地址
+            host1: 172.20.0.2
+            host2: 172.20.0.3
