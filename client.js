@@ -63,6 +63,17 @@ export const onMessage = ()=>{
     });
 }
 
-
+/**
+ * 发送消息到服务器
+ * @param {Object} msg - 要发送的消息对象
+ * { type: "",data:""}
+ */
+export const sendMessage = (msg) => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(msg));
+    } else {
+        console.warn("⚠️ WebSocket 未连接，消息发送失败:", msg);
+    }
+};
 
 
