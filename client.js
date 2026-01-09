@@ -1,9 +1,10 @@
-const WebSocket = require("ws");
+import WebSocket from "ws"
 
 const WS_URL = "ws://172.16.0.114:38080";
 
 let ws;
 let heartbeatTimer = null;
+let messageCallback = null; // 存储外部注册的消息回调
 
 function connect() {
     ws = new WebSocket(WS_URL);
@@ -23,6 +24,11 @@ function connect() {
             let item = JSON.parse(data);
             if (item.type === "pong"){
                 console.log("📩 来自服务器:", data.toString());
+            }else{
+                // 如果存在回调函数则调用
+                if (messageCallback){
+                    messageCallback(item);
+                }
             }
         }catch (e) {
 
@@ -47,3 +53,16 @@ function connect() {
 }
 
 connect();
+
+
+// 抛出一个promise用来接收事件回调
+export const onMessage = ()=>{
+    return new Promise((resolve) => {
+        // 传递方法
+        messageCallback = resolve
+    });
+}
+
+
+
+
