@@ -1,0 +1,17 @@
+{
+  "name": "chrelyonly-websocket-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrelyonly/chrelyonly-websocket-node"
+  },
+  "private": true,
+  "dependencies": {
+    "ws": "^8.19.0"
+  }
+}
